@@ -2,3 +2,5 @@ node_modules
 .eslintrc
 .vscode
 package-lock.json
+views
+public
