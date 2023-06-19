@@ -8,7 +8,6 @@ const session = require("express-session");
 
 require("dotenv").config();
 
-const port = process.env.PORT || 3000;
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
@@ -45,7 +44,6 @@ app.use(errorController.get404);
 mongoose
   .connect("mongodb://localhost:27017/shop")
   .then(() => {
-    console.log("connected");
     User.findOne().then((user) => {
       if (!user) {
         const user1 = new User({
@@ -58,9 +56,7 @@ mongoose
         user1.save();
       }
     });
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
+    app.listen(process.env.PORT);
   })
   .catch((err) => console.log(err));
 

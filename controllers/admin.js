@@ -40,7 +40,6 @@ const postAddProduct = (req, res) => {
 
 const getEditProduct = (req, res) => {
   const prodId = req.params.productId;
-  console.log(prodId);
   Product.findById(prodId)
     .then((data) => {
       res.status(200).json({
@@ -93,7 +92,6 @@ const getProducts = (req, res) => {
     // .select("title price -_id")
     // .populate("userId", "name")
     .then((productsData) => {
-      console.log(productsData);
       res.status(200).json({
         status: "success",
         massage: {
@@ -243,163 +241,3 @@ module.exports = {
   postOrder,
   getOrders,
 };
-
-// const postCart = async (req, res) => {
-//   try {
-//     const { productId } = req.body;
-//     const { userId } = req.params;
-
-//     const product = await Product.findById(productId);
-
-//     if (!product) {
-//       res.status(404).json({ status: "failed", error: "Product not found" });
-//     }
-
-//     const user = await User.findById(userId);
-//     console.log(user);
-//     if (!user) {
-//       res.status(404).json({ status: "failed", error: "User not found" });
-//     }
-
-//     const cartItem = {
-//       product: product._id,
-//       quantity: 1,
-//     };
-
-//     user.cart.items.push(cartItem);
-//     await user.save();
-
-//     res
-//       .status(200)
-//       .json({ status: "success", message: "Cart item added successfully" });
-//   } catch (err) {
-//     // res.status(500).json({ error: err.message });
-//   }
-// };
-
-// try {
-//   const { productId } = req.body;
-//   console.log(productId);
-//   const product = await Product.findById(productId);
-//   const addToCartData = await req.user.addToCart(product);
-
-//   console.log(addToCartData);
-// } catch (error) {
-//   console.log(error.message);
-// }
-// .then((productsData) => {
-//   console.log(productsData);
-//   res.status(200).json({
-//     status: "success",
-//     massage: {
-//       products: productsData,
-//     },
-//   });
-// })
-
-// const getCart = (req, res) => {
-//   Product.findById(req.user._id)
-//     .populate("cart.items.product")
-//     .exec()
-//     // .select("title price -_id")
-//     // .populate("userId", "name")
-//     .then((user) => {
-//       const products = user.cart.items.map((item) => ({
-//         quantity: item.quantity,
-//       }));
-//       console.log(user);
-//       res.status(200).json({
-//         status: "success",
-//         massage: {
-//           items: products,
-//         },
-//       });
-//     })
-//     .catch(() => {
-//       res.status(404).json({
-//         status: "failed",
-//         message: "Something is Wrong",
-//       });
-//     });
-// };
-
-// new ObjectId('647443e338d4b00c47286388')
-
-// exports.getEditProduct = (req, res) => {
-//     const editMode = req.query.edit;
-//     if(!editMode) {
-//         res.redirect('/');
-//     }
-//     const prodId = req.params.productId;
-//     req.user
-//     .getProducts({ where: { id: prodId } })
-//     // Product.findByPk(prodId)
-//         .then(products => {
-//             const product = products[0];
-//             if(!product) {
-//                 res.redirect('/');
-//             }
-//             res.render('admin/edit-product', {
-//                 pageTitle: 'Edit Product',
-//                 path: '/admin/edit-product',
-//                 editing: editMode,
-//                 product
-//             });
-//         })
-//         .catch(err => console.log(err));
-// };
-
-// exports.postEditProduct = (req,res) => {
-//     const prodId = req.body.productId;
-//     const upadatedTitle = req.body.title;
-//     const upadatedPrice = req.body.price;
-//     const upadatedImageUrl = req.body.imageUrl;
-//     const upadatedDesc = req.body.description;
-//     Product.findByPk(prodId)
-//     .then(product => {
-//         product.title = upadatedTitle;
-//         product.price = upadatedPrice;
-//         product.description = upadatedDesc;
-//         product.imageUrl = upadatedImageUrl;
-//         return product.save();
-//     })
-//     .then(() => {
-//         console.log('UPDATED PRODUCT!');
-//         res.redirect('/admin/products');
-
-//     })
-//     .catch(err => console.log(err));
-// };
-
-// exports.getProducts = (req, res) => {
-//     req.user
-//         .getProducts()
-//             .then(products => {
-//                 res.render('admin/products', {
-//                     prods: products,
-//                     pageTitle: 'Admin Products',
-//                     path: '/admin/products'
-//                 });
-//             })
-//             .catch(err => console.log(err))
-// };
-// Product.fetchAll(products => {
-//     res.render('admin/products', {
-//         prods: products,
-//         pageTitle: 'Admin Products',
-//         path: '/admin/products'
-//     });
-// });
-
-// exports.postDeleteProduct = (req, res) => {
-//     const prodId = req.body.productId;
-//     Product.findByPk(prodId)
-//         .then(product => {
-//             product.destroy();
-//         })
-//         .then(() => {
-//             console.log('DESTROYED PRODUCT');
-//             res.redirect('/admin/products');
-//         })
-//         .catch(err => console.log(err));
-// };
